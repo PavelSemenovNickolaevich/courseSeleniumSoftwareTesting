@@ -15,26 +15,27 @@ import java.util.concurrent.TimeUnit;
 public class BaseTest {
     private WebDriver driver;
 
-
     @BeforeMethod
     public void setUp() {
         System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.get("http://localhost/litecart/litecart-1.3.7/public_html/admin/login.php");
+    }
+
+    @Test
+    public void shouldOpenAdminPage() {
+        driver.findElement(By.name("username")).sendKeys("admin");
+        driver.findElement(By.name("password")).sendKeys("admin");
+        driver.findElement(By.name("login")).click();
+        String url = "http://localhost/litecart/litecart-1.3.7/public_html/admin/";
+        String currentUrl = driver.getCurrentUrl();
+        assertEquals(url, currentUrl);
     }
 
     @AfterMethod
     public void tearDown() {
         driver.quit();
-    }
-
-
-    @Test
-    public void shouldOpenPage() {
-        driver.get("https://www.google.com/");
-        String googleUrl = "https://www.google.com/";
-        String currentUrl = driver.getCurrentUrl();
-        assertEquals(googleUrl, currentUrl);
     }
 }
