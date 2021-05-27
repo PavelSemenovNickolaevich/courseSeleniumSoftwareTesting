@@ -1,7 +1,6 @@
 package com.example.courseSeleniumSoftwareTesting;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
@@ -15,7 +14,7 @@ import java.util.List;
 
 
 
-public class Test1 extends BaseTest{
+public class TestAdmin1 extends BaseTestAdmin {
 
     @Test
     public void shouldOpenCheckSection() throws InterruptedException {

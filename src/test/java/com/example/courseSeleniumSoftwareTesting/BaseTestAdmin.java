@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.testng.Assert.assertEquals;
 
-public class BaseTest {
+public class BaseTestAdmin {
     //private ThreadLocal<WebDriver> driver = new ThreadLocal<>();
     protected WebDriver driver;
     private String browser;
