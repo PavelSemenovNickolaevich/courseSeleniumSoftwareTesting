@@ -4,18 +4,15 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
-import java.io.File;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -23,12 +20,13 @@ import static org.testng.Assert.assertEquals;
 
 public class BaseTest {
     //private ThreadLocal<WebDriver> driver = new ThreadLocal<>();
-    private WebDriver driver;
+    protected WebDriver driver;
     private String browser;
+    private WebDriverWait wait;
 
     @BeforeMethod
     public void setUp(@Optional("chrome") String browser) {
-       DesiredCapabilities cap = new DesiredCapabilities();
+        DesiredCapabilities cap = new DesiredCapabilities();
         cap.setCapability("unexpectedAlertBehaviour", "dismiss");
         switch (browser) {
             case "chrome":
@@ -52,14 +50,13 @@ public class BaseTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get("http://localhost/litecart/litecart-1.3.7/public_html/admin/login.php");
-    }
-
-
-    @Test
-    public void shouldOpenAdminPage() {
         driver.findElement(By.name("username")).sendKeys("admin");
         driver.findElement(By.name("password")).sendKeys("admin");
         driver.findElement(By.name("login")).click();
+    }
+
+    @Test(enabled = false)
+    public void shouldOpenAdminPage() {
         Set<Cookie> cookies = driver.manage().getCookies();
         cookies.forEach(System.out::println);
         String url = "http://localhost/litecart/litecart-1.3.7/public_html/admin/";
@@ -70,5 +67,18 @@ public class BaseTest {
     @AfterMethod
     public void tearDown() {
         driver.quit();
+    }
+
+    boolean areElementsPresent(WebDriver driver, By locator) {
+        return driver.findElements(locator).size() > 0;
+    }
+
+    boolean isElementPresent(By locator) {
+        try {
+            driver.findElement(locator);
+            return true;
+        } catch (NoSuchElementException ex) {
+            return false;
+        }
     }
 }
