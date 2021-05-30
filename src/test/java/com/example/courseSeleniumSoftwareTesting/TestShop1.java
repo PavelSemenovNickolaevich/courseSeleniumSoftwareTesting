@@ -14,12 +14,15 @@ import java.util.List;
 
 public class TestShop1 extends BaseTestShop {
 
+    private static final By DUCKS_LOCATOR = By.cssSelector("li.hover-light");
+    private static final By STICKERS_LOCATOR = By.xpath(".//div[@class='image-wrapper']/div[@title]");
+
     @Test
     public void shouldCheckStickersAreAvailable() {
 
-        List<WebElement> ducks = driver.findElements(By.xpath("//li[@class='product column shadow hover-light']"));
+        List<WebElement> ducks = driver.findElements(DUCKS_LOCATOR);
         for (WebElement duck : ducks) {
-            List<WebElement> stickers = duck.findElements(By.xpath(".//div[@class='image-wrapper']/div[@title]"));
+            List<WebElement> stickers = duck.findElements(STICKERS_LOCATOR);
             if (stickers.size() != 1) {
                 Assert.fail("Sticker more then 1");
             }
