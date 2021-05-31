@@ -14,8 +14,8 @@ import java.util.List;
 
 public class TestShop1 extends BaseTestShop {
 
-    private static final By DUCKS_LOCATOR = By.cssSelector("li.hover-light");
-    private static final By STICKERS_LOCATOR = By.xpath(".//div[@class='image-wrapper']/div[@title]");
+    private static final By DUCKS_LOCATOR = By.cssSelector("li.product");
+    private static final By STICKERS_LOCATOR = By.cssSelector("div.sticker");
 
     @Test
     public void shouldCheckStickersAreAvailable() {
