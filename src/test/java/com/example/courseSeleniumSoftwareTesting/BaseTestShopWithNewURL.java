@@ -49,8 +49,9 @@ public class BaseTestShopWithNewURL {
         }
         System.out.println(((HasCapabilities) driver).getCapabilities());
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get("https://litecart.stqa.ru/ru/");
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.get("https://litecart.stqa.ru/en/");
+
     }
 
     @Test(enabled = false)
@@ -71,12 +72,21 @@ public class BaseTestShopWithNewURL {
         return driver.findElements(locator).size() > 0;
     }
 
+//    boolean isElementPresent(By locator) {
+//        try {
+//            driver.findElement(locator);
+//            return true;
+//        } catch (NoSuchElementException ex) {
+//            return false;
+//        }
+//    }
+
     boolean isElementPresent(By locator) {
         try {
-            driver.findElement(locator);
-            return true;
-        } catch (NoSuchElementException ex) {
-            return false;
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            return driver.findElements(locator).size() > 0;
+        } finally {
+            driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         }
     }
 
