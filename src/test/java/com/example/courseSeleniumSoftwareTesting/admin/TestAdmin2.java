@@ -1,6 +1,7 @@
-package com.example.courseSeleniumSoftwareTesting;
+package com.example.courseSeleniumSoftwareTesting.admin;
 
 
+import com.example.courseSeleniumSoftwareTesting.BaseTestAdmin;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -35,11 +36,12 @@ public class TestAdmin2 extends BaseTestAdmin {
         Thread.sleep(1000);
         driver.findElement(COUNTRIES_LOCATOR).click();
         List<WebElement> listCountries = driver.findElements(COUNTRIES_OF_LIST);
-        for (int i = 0; i < listCountries.size() - 1; i++) {
-            if (listCountries.get(i + 1).getText().compareTo(listCountries.get(i).getText()) < 0) {
-                Assert.fail("Countries list in non-alphabetic order!");
-            }
-        }
+        compareAlphabetic(listCountries);
+//        for (int i = 0; i < listCountries.size() - 1; i++) {
+//            if (listCountries.get(i + 1).getText().compareTo(listCountries.get(i).getText()) < 0) {
+//                Assert.fail("Countries list in non-alphabetic order!");
+//            }
+//        }
 
         List<WebElement> listZones = driver.findElements(ZONES_OF_LIST);
         for (int i = 0; i < listZones.size(); i++) {
@@ -47,17 +49,13 @@ public class TestAdmin2 extends BaseTestAdmin {
                 listCountries.get(i).click();
                 Thread.sleep(1000);
                 List<WebElement> nameZones = driver.findElements(NAMES_ZONE_OF_LIST);
-                for(int j = 0;  j < nameZones.size() - 1; j++) {
-                    if (nameZones.get(j + 1).getText().compareTo(nameZones.get(j).getText()) < 0) {
-                        Assert.fail("Zones list in non-alphabetic order!");
-                    }
-                }
-               driver.findElement(By.xpath("//button[@name='cancel']")).click();
+                compareAlphabetic(nameZones);
+                driver.findElement(By.xpath("//button[@name='cancel']")).click();
             }
         }
      }
 
-     @Test(testName = "Second test")
+    @Test(testName = "Second test")
     public void shouldAlphabeticGeoZones() throws InterruptedException {
         Thread.sleep(1000);
          driver.findElement(GEOZONES_LOCATOR).click();
@@ -66,12 +64,21 @@ public class TestAdmin2 extends BaseTestAdmin {
              Thread.sleep(2000);
              elements.get(i).click();
              List<WebElement> el = driver.findElements(By.xpath("//table[@class='dataTable']//td[3]"));
-             for(int j = 0;  j < el.size() - 1; j++) {
-                 if (el.get(j + 1).getText().compareTo(el.get(j).getText()) < 0) {
-                     Assert.fail("Zones list in non-alphabetic order!");
-                 }
-             }
+             compareAlphabetic(el);
+//             for(int j = 0;  j < el.size() - 1; j++) {
+//                 if (el.get(j + 1).getText().compareTo(el.get(j).getText()) < 0) {
+//                     Assert.fail("Zones list in non-alphabetic order!");
+//                 }
+//             }
              driver.findElement(By.xpath("//button[@name='cancel']")).click();
          }
      }
+
+    private void compareAlphabetic(List<WebElement> list) {
+        for(int j = 0;  j < list.size() - 1; j++) {
+            if (list.get(j + 1).getText().compareTo(list.get(j).getText()) < 0) {
+                Assert.fail("Zones/Countries list in non-alphabetic order!");
+            }
+        }
+    }
 }

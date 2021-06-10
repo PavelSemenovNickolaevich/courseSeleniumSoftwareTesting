@@ -1,5 +1,6 @@
-package com.example.courseSeleniumSoftwareTesting;
+package com.example.courseSeleniumSoftwareTesting.admin;
 
+import com.example.courseSeleniumSoftwareTesting.BaseTestAdmin;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;

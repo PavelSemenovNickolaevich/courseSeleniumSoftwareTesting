@@ -73,12 +73,16 @@ public class BaseTestAdmin {
         return driver.findElements(locator).size() > 0;
     }
 
-    boolean isElementPresent(By locator) {
+    public boolean isElementPresent(By locator) {
         try {
             driver.findElement(locator);
             return true;
         } catch (NoSuchElementException ex) {
             return false;
         }
+    }
+
+    protected WebElement find(By locator) {
+        return driver.findElement(locator);
     }
 }
