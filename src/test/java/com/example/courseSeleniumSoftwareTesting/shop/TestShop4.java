@@ -1,14 +1,16 @@
-package com.example.courseSeleniumSoftwareTesting;
+package com.example.courseSeleniumSoftwareTesting.shop;
 
+import com.example.courseSeleniumSoftwareTesting.BaseTestShopWithNewURL;
+import jdk.nashorn.internal.runtime.regexp.joni.ast.StringNode;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 
 
@@ -54,17 +56,18 @@ public class TestShop4 extends BaseTestShopWithNewURL {
         }
     }
 
-    private void deleteDucks(WebDriverWait wait) {
+    private void deleteDucks(WebDriverWait wait) throws InterruptedException {
         findAndClick(CHECK_OUT);
         if (isElementPresent(By.xpath("(//li[@class='shortcut'])[1]"))) {
-            findAndClick(By.xpath("//a[@href='#']"));
+            Thread.sleep(1000);
+            findAndClick(By.xpath("(//a[@href='#'])[1]"));
         }
-        findAndClick(By.xpath("(//button[@name='remove_cart_item'])[1]"));
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//button[@name='remove_cart_item'])[1]")));
         while (driver.findElements(By.cssSelector("[name='remove_cart_item']")).size() != 0) {
             wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@name='remove_cart_item']")));
+            List<WebElement> elements = driver.findElements(By.xpath("//td[@class='item']"));
+            String name = elements.get(0).getText();
             findAndClick(By.xpath("(//button[@name='remove_cart_item'])[1]"));
-            wait.until(ExpectedConditions.stalenessOf(find(By.cssSelector("table.dataTable"))));
+            wait.until(ExpectedConditions.stalenessOf(find(By.xpath("//td[contains(text(),'" + name + "')]"))));
         }
     }
 

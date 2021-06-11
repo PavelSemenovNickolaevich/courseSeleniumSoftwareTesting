@@ -81,7 +81,7 @@ public class BaseTestShopWithNewURL {
 //        }
 //    }
 
-    boolean isElementPresent(By locator) {
+    protected boolean isElementPresent(By locator) {
         try {
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             return driver.findElements(locator).size() > 0;

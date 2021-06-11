@@ -3,6 +3,7 @@ package com.example.courseSeleniumSoftwareTesting;
 import org.openqa.selenium.By;
 import org.openqa.selenium.HasCapabilities;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -54,4 +55,9 @@ public class BaseTestShop {
     public void tearDown() {
         driver.quit();
     }
+
+    protected WebElement find(By locator) {
+        return driver.findElement(locator);
+    }
 }
+
